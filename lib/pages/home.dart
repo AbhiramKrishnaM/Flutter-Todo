@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import "package:flutter/material.dart";
+import "package:flutter_todo_application/util/dialog_box.dart";
 import "package:flutter_todo_application/util/todo_tile.dart";
 
 class HomePage extends StatefulWidget {
@@ -11,6 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _controler = TextEditingController();
+
   List toDoList = [
     ["Make tutorial", false],
     ["Excercise", false],
@@ -22,6 +25,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _controler,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +42,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("TO DO"),
         elevation: 0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(Icons.add),
       ),
       body: ListView.builder(
         itemCount: toDoList.length,
